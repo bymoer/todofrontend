@@ -17,7 +17,7 @@ const CreateToDo = ({...props}) => {
 
     const onHandleSave = async () => {
 
-        const newToDo = {title: editTitle, content: editContent};
+        const newToDo = {title: editTitle, content: editContent, isComplete: false, timeCreated: Date.now()};
         
         try {
             

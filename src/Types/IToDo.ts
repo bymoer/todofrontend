@@ -2,7 +2,8 @@ export interface IToDo {
     _id: string,
     title: string,
     content: string,
-    isComplete: boolean
+    isComplete: boolean,
+    timeCreated: number
 }
 
 export interface IToDoState {

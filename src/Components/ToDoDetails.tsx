@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../App/store";
 import React, { useState } from "react";
 import { updateToDo, selectToDo } from "../Features/ToDoService";
-import { useUpdateTodoMutation, useDeleteTodoMutation } from "../Features/Api";
+import { useUpdateTodoMutation, useDeleteTodoMutation, useCompleteTodoMutation } from "../Features/Api";
 import { IToDo, IToDos } from "../Types/IToDo";
 
 const ToDoDetails = () => {
@@ -23,6 +23,16 @@ const ToDoDetails = () => {
 
     const [deleteToDo ,{}] = useDeleteTodoMutation();
 
+    const [onCompleteToDo, {}] = useCompleteTodoMutation();
+
+    const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEditTitle(event.target.value);
+    }
+
+    const onChangeContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setEditContent(event.target.value)
+    }
+
     const editTodo = () => {
 
         dispatch(updateToDo());
@@ -37,6 +47,8 @@ const ToDoDetails = () => {
 
             await updateTodoMutation(todoData);
 
+            dispatch(updateToDo());
+
             dispatch(selectToDo());
             
         } catch (error) {
@@ -45,15 +57,6 @@ const ToDoDetails = () => {
             
         }
 
-    }
-
-    
-    const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEditTitle(event.target.value);
-    }
-
-    const onChangeContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setEditContent(event.target.value)
     }
 
     const onDeleteToDo = () => {
@@ -66,10 +69,41 @@ const ToDoDetails = () => {
 
             deleteToDo({_id: deleteId});
 
+            dispatch(selectToDo());
+
         } catch (error) {
             
             console.error(error);
 
+        }
+
+    }
+
+    const onToDoComplete = () => {
+
+        try {
+
+            let completeId = thisTodo?._id;
+
+            console.log('Selected for completion id: ', completeId);
+
+            // safety for todos without isComplete prop - yeah yeah I know
+
+            if(thisTodo?.isComplete == undefined) {
+                let isComplete = true;
+
+                onCompleteToDo({_id: completeId, isComplete: isComplete})
+
+            } else {
+
+                onCompleteToDo({_id: completeId, isComplete: !thisTodo.isComplete})
+
+            }
+
+            dispatch(selectToDo());
+            
+        } catch (error) {
+            
         }
 
     }
@@ -84,6 +118,7 @@ const ToDoDetails = () => {
             : 
             <div>
                 <h3>{thisTodo?.title}</h3>
+                <p>{new Date(thisTodo?.timeCreated!).toString()}</p>
                 <p>{thisTodo?.content}</p>
             </div>
         }
@@ -95,6 +130,9 @@ const ToDoDetails = () => {
             <div>
                 <button type="button" onClick={() => editTodo()}>Edit</button>
                 <button type="button" onClick={() => onDeleteToDo()}>Delete</button>
+
+                <button type="button" onClick={() => onToDoComplete()}>{thisTodo?.isComplete ? 'Not Complete' : 'Complete'}</button>
+
             </div>
             }
         </div>

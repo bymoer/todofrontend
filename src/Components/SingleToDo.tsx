@@ -11,13 +11,12 @@ const SingleToDo = ({...props}) => {
 
         dispatch(selectToDo());
 
-        console.log('This is the selected id: ', selId);
-
     };
 
     return(
         <div key={props.thisToDo._id}>
             <h3>{props.thisToDo.title}</h3>
+            <p>{new Date(props.thisToDo.timeCreated!).toString()}</p>
             <p>{props.thisToDo.content}</p>
             <button type="button" onClick={() => viewTodo(props.thisToDo._id)}>View</button>
         </div>

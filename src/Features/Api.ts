@@ -8,11 +8,11 @@ export const api = createApi({
     fetchTodos: builder.query<IToDos, void>({
         query: () => 'todos'
     }),
-    createTodo: builder.mutation<IToDo, {title: string, content: string}>({
-        query: ({title, content}) => ({
+    createTodo: builder.mutation<IToDo, {title: string, content: string, isComplete: boolean, timeCreated: number}>({
+        query: ({title, content, isComplete, timeCreated}) => ({
             url: 'createtodo',
             method: 'POST',
-            body: {title, content},
+            body: {title, content, isComplete, timeCreated},
         })
     }),
     updateTodo: builder.mutation<IToDo, {_id: string | undefined, title: string, content: string}>({
@@ -20,6 +20,13 @@ export const api = createApi({
             url: `updatetodo/${_id}`,
             method: 'PUT',
             body: {_id, title, content}
+        })
+    }),
+    completeTodo: builder.mutation<IToDo, {_id: string | undefined, isComplete: boolean}>({
+        query: ({_id, isComplete}) => ({
+            url: `completetodo/${_id}`,
+            method: 'PUT',
+            body: {_id, isComplete}
         })
     }),
     deleteTodo: builder.mutation<IToDo, {_id: string | undefined}>({
@@ -31,4 +38,4 @@ export const api = createApi({
   })
 });
 
-export const { useFetchTodosQuery, useCreateTodoMutation, useUpdateTodoMutation, useDeleteTodoMutation } = api;
+export const { useFetchTodosQuery, useCreateTodoMutation, useUpdateTodoMutation, useDeleteTodoMutation, useCompleteTodoMutation } = api;

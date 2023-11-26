@@ -4,6 +4,8 @@ import { useFetchTodosQuery, useCreateTodoMutation, useUpdateTodoMutation, api }
 import { selectToDo, updateToDo, todoId, todoArray, todoChanged } from "./Features/ToDoService";
 import { RootState, AppDispatch } from "./App/store";
 
+import { useSocket } from "./SocketContext";
+
 import CreateToDo from "./Components/CreateToDo";
 import ToDoList from "./Components/ToDoList";
 import ToDoDetails from "./Components/ToDoDetails";
@@ -12,20 +14,15 @@ import ToDoDetails from "./Components/ToDoDetails";
 const ToDoApp = () => {
     const dispatch =  useDispatch<AppDispatch>();
 
+    // Setup Socket.IO conn
+    const { value: socket } = useSocket();
+
     const {ToDoSelected, UpdateSelected, ToDoIdSelected} = useSelector((state: RootState) => state.todos)
 
-    // Should be removed when implemented in SingleToDo and ToDoDetails
-    const ButtonSelect = () =>{
-        dispatch(selectToDo());
-    }
-
-    const ButtonEdit = () => {
-        dispatch(updateToDo());
-    }
-    
     const {data, refetch } = useFetchTodosQuery();
 
     useEffect(() => {
+
         const fetchData = async () => {
 
             if (data) {
@@ -37,15 +34,37 @@ const ToDoApp = () => {
     
         fetchData();
 
-      }, [data]);
+        socket.onAny( async (event, ...args) => {
+          
+            switch (event) {
+                case 'ToDo Created':
+                    console.log('Received data: ', args);
+                    await refetch();
+                    break;
+                case 'ToDo Deleted':
+                    console.log('Received data: ', args);
+                    await refetch();
+                    break;
+                case 'ToDo Updated':
+                    console.log('Received data: ', args);
+                    await refetch();
+                    break;
+                case 'ToDo Complete':
+                    console.log('Received data: ', args);
+                    await refetch();
+                    break;
+                default:
+                    break;
+            }
+
+        })
+
+      }, [data, dispatch, refetch]);
 
     return(
         <div>
 
             <h1>Hello ToDo App !</h1>
-
-            <button type="button" onClick={ButtonSelect}>Select ToDo</button>
-            <button type="button" onClick={ButtonEdit}>Edit ToDo</button>
 
             <CreateToDo />
 
