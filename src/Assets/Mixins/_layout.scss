@@ -1,0 +1,91 @@
+@use "../Variables/variables" as var;
+@use "../Abstracts/typography" as type;
+
+// Resets
+
+@mixin body-reset(){
+    padding: 0px;
+    margin: 0px;
+}
+
+@mixin p-reset(){
+    margin: 0px;
+    padding: 0px;
+}
+
+// Containers
+
+@mixin flex-container-col(){
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-container-row(){
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin container-center-h(){
+    justify-content: center;
+}
+
+// Header Title
+@mixin header-title(){
+    font-family: 'Roboto thin', sans-serif;
+}
+
+// ToDo Components
+
+@mixin single-todo-outer(){
+    border: solid 2px black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+@mixin todo-title(){
+    margin: 5px 0px 5px 0px;
+    font-family: 'Roboto thin', sans-serif;
+}
+
+@mixin todo-inner-content(){
+    h3{
+        @include todo-title;
+    }
+
+    p:nth-child(2){
+        font-size: 0.8em;
+    }
+
+    p:nth-child(2),
+    p:nth-child(3){
+        font-family: 'Roboto thin', sans-serif;
+        margin: 5px 0px 5px 0px;
+    }
+}
+
+@mixin input-elements(){
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+// Buttons
+
+@mixin button-style-universal(){
+    height: 30px;
+    width: 75px;
+    border-radius: 5px;
+    border: none;
+}
+
+@mixin btn($name: "", $bg: #444, $col: "white"){
+    .btn#{$name}{
+        background: $bg;
+        color: $col;
+        @include button-style-universal;
+    }
+}
+
+@each $name, $bg, $col in var.$buttons {
+    @include btn($name, $bg, $col);
+}

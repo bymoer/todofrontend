@@ -1,0 +1,141 @@
+@use "./Mixins/layout" as layout;
+@use "./Variables/variables" as var;
+
+/*
+* Reset
+*/
+
+html, body {
+    @include layout.body-reset;
+}
+
+p{
+    @include layout.p-reset;
+}
+
+div{
+    box-sizing: border-box;
+}
+
+/*
+* Container setup
+*/ 
+
+// Outer container
+#target {
+    @include layout.flex-container-col;
+    align-items: center;
+}
+
+.container-column{
+    @include layout.flex-container-col;
+    @include layout.container-center-h;
+}
+
+// App container
+.hello-todo-app{
+    @include layout.flex-container-col;
+    gap: 20px;
+    width: 300px;
+
+    div:nth-child(1){
+
+        h1{
+            @include layout.header-title;
+        }
+
+    }
+
+    div.create-todo{
+        @include layout.flex-container-col;
+        gap: 5px;
+
+        div {
+            display: block;
+
+            input{
+                height: 3em;
+
+            }
+
+            textarea{
+                height: 10em;
+            }
+
+            input, textarea {
+                // display: block;
+                // width: 100%;
+                @include layout.input-elements;
+            }
+
+        }
+
+        div:nth-child(3){
+            @include layout.flex-container-row;
+            gap: 5px;
+            justify-content:flex-end;
+        }
+
+    }
+
+    div.todo-list{
+        @include layout.flex-container-col;
+        gap: 20px;
+    }
+
+    div.todo-details{
+        @include layout.flex-container-col;
+        @include layout.single-todo-outer;
+        @include layout.todo-inner-content;
+        gap: 20px;
+
+        div:nth-child(2){
+            @include layout.flex-container-row;
+            gap: 5px;
+            justify-content:flex-end;
+        }
+
+        .edit-input{
+            //display: block;
+            @include layout.flex-container-col;
+
+            div {
+                display: block;
+                width: 100%;
+            }
+
+            input{
+                height: 3em;
+            }
+
+            textarea{
+                height: 10em;
+            }
+
+            input, textarea {
+                // display: block;
+                // box-sizing: border-box;
+                // width: 100%;
+                @include layout.input-elements;
+            }
+        }
+
+    }
+
+}
+
+
+
+// Single todo component
+.single-todo{
+    @include layout.flex-container-col;
+    @include layout.single-todo-outer;
+    @include layout.todo-inner-content;
+
+    div{
+        @include layout.flex-container-row;
+        gap: 5px;
+        justify-content:flex-end;
+    }
+
+}

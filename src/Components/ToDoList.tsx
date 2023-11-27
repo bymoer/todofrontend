@@ -10,7 +10,7 @@ const ToDoList = () => {
     const todoArray: IToDos = useSelector((state: RootState) => state.todos.ToDoArray)
 
     return(
-        <div>
+        <div className="todo-list">
 
             {
             todoArray ? (

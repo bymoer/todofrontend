@@ -14,11 +14,13 @@ const SingleToDo = ({...props}) => {
     };
 
     return(
-        <div key={props.thisToDo._id}>
+        <div className="single-todo" key={props.thisToDo._id}>
             <h3>{props.thisToDo.title}</h3>
             <p>{new Date(props.thisToDo.timeCreated!).toString()}</p>
             <p>{props.thisToDo.content}</p>
-            <button type="button" onClick={() => viewTodo(props.thisToDo._id)}>View</button>
+            <div>
+                <button className="btn-select" type="button" onClick={() => viewTodo(props.thisToDo._id)}>View</button>
+            </div>
         </div>
     )
 

@@ -35,15 +35,18 @@ const CreateToDo = ({...props}) => {
     }
 
     return(
-        <div>
+        <div className="create-todo">
             <div>
-            <input placeholder="Enter title" type="text" onChange={onHandleTitleChange} value={editTitle}></input>
+                <input placeholder="Enter title" type="text" onChange={onHandleTitleChange} value={editTitle}></input>
             </div>
             
             <div>
-            <textarea placeholder="Enter content" onChange={onHandleContentChange} value={editContent}></textarea>
+                <textarea placeholder="Enter content" onChange={onHandleContentChange} value={editContent}></textarea>
             </div>
-            <button value="button" onClick={onHandleSave}>Save</button>
+
+            <div>
+                <button className="btn-verify" value="button" onClick={onHandleSave}>Save</button>
+            </div>
         </div>
     )
 

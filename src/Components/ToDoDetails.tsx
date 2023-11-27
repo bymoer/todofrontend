@@ -109,11 +109,15 @@ const ToDoDetails = () => {
     }
 
     return(
-        <div>
+        <div className="todo-details">
         {editToDo ? 
-            <div>
-                <input type="text" value={editTitle} onChange={onChangeTitle}></input>
-                <textarea value={editContent} onChange={onChangeContent}></textarea>
+            <div className="edit-input">
+                <div>
+                    <input type="text" value={editTitle} onChange={onChangeTitle}></input>
+                </div>
+                <div>
+                    <textarea value={editContent} onChange={onChangeContent}></textarea>
+                </div>
             </div> 
             : 
             <div>
@@ -124,14 +128,14 @@ const ToDoDetails = () => {
         }
         {editToDo ? 
             <div>
-                <button type="button" onClick={() => updateTodo()}>Save</button>
+                <button className="btn-verify" type="button" onClick={() => updateTodo()}>Save</button>
             </div>
             : 
             <div>
-                <button type="button" onClick={() => editTodo()}>Edit</button>
-                <button type="button" onClick={() => onDeleteToDo()}>Delete</button>
+                <button className="btn-select" type="button" onClick={() => editTodo()}>Edit</button>
+                <button className="btn-delete" type="button" onClick={() => onDeleteToDo()}>Delete</button>
 
-                <button type="button" onClick={() => onToDoComplete()}>{thisTodo?.isComplete ? 'Not Complete' : 'Complete'}</button>
+                <button className={thisTodo?.isComplete ? "btn-delete" : "btn-verify" } type="button" onClick={() => onToDoComplete()}>{thisTodo?.isComplete ? 'Redo' : 'Complete'}</button>
 
             </div>
             }

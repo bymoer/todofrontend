@@ -4,6 +4,7 @@ import { store } from './App/store';
 import { Provider } from 'react-redux';
 import { SocketProvider } from './SocketContext';
 import ToDoApp from './App';
+import './Assets/styles.scss';
 
 if (typeof document !== 'undefined') {
     render(

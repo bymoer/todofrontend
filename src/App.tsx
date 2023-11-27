@@ -19,7 +19,7 @@ const ToDoApp = () => {
 
     const {ToDoSelected, UpdateSelected, ToDoIdSelected} = useSelector((state: RootState) => state.todos)
 
-    const {data, refetch } = useFetchTodosQuery();
+    const {data, refetch} = useFetchTodosQuery();
 
     useEffect(() => {
 
@@ -62,9 +62,11 @@ const ToDoApp = () => {
       }, [data, dispatch, refetch]);
 
     return(
-        <div>
+        <div className="hello-todo-app">
 
-            <h1>Hello ToDo App !</h1>
+            <div>
+                <h1>Hello ToDo App !</h1>
+            </div>
 
             <CreateToDo />
 

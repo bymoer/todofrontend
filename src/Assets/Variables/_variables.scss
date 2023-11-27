@@ -1,0 +1,18 @@
+@for $i from 1 through 100{
+    .width-#{$i}-percent{
+        width: $i * 1%;
+    }
+}
+
+@for $i from 1 through 6{
+    h#{$i}{
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+$buttons:
+    -verify #388e3c #FFFFFF,
+    -delete #D50000 #FFFFFF,
+    -select #1a237e #FFFFFF;
+
